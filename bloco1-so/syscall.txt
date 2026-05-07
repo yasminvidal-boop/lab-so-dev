@@ -1,0 +1,48 @@
+# Atividade 3 — Modo usuário × modo kernel
+# Preencha este arquivo durante a atividade.
+# ───────────────────────────────────────────
+
+# PARTE A — Observar syscalls com strace
+
+# Cole abaixo a linha relevante da saída de:
+# strace echo "ola" 2>&1 | grep write
+
+Saída filtrada:
+
+# Anote:
+#   Argumento 1 (file descriptor):
+#   O que está sendo escrito:
+#   Valor de retorno:
+
+fd:
+conteúdo:
+retorno:
+
+
+# PARTE B — Programa C com write() direto
+
+# Cole aqui o código de syscall_direto.c que você escreveu:
+
+[código-fonte]
+
+
+# Cole aqui a linha write(...) da saída de strace -o strace.txt ./syscall_direto:
+
+[saída do strace]
+
+
+# PARTE C — Questões de síntese
+
+# 1. A apresentação mostrou que "instruções de I/O são privilegiadas". 
+#    Com base no que o strace revelou, explique com suas palavras como um programa
+#    de usuário consegue fazer I/O sem executar instruções privilegiadas diretamente.
+
+Resposta 1:
+
+
+# 2. Na apresentação sobre a genealogia do software, vimos que os programas de canal
+#    eram responsáveis por intermediar a transferência de dados entre a memória e os
+#    dispositivos, sem intervenção direta da CPU principal. Qual elemento do sistema 
+#    operacional moderno herda esse papel? 
+
+Resposta 2:
