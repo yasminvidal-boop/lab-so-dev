@@ -6,36 +6,65 @@
 # Cole abaixo a saída de cada comando e anote o que observou.
 
 echo $$
-  PID do shell: 
-
+  PID do shell:
+47
 cat /proc/[PID]/status   (substitua [PID] pelo número real)
-  PID:
-  PPID (processo pai):
-  State:
+  PID: 47
+  PPID (processo pai): 1
+  State: S (sleeping)
 
 cat /proc/[PID]/stat (campos relevantes)
-  Campo 2 — nome do executável:
-  Campo 3 — estado:
-  Campos 14 e 15 — utime / stime:
+  Campo 2 — nome do executável: (sh)
+  Campo 3 — estado: S
+  Campos 14 e 15 — utime / stime:20 E 16
 
 ps aux (primeiras linhas)
-  [cole aqui]
+  [root@localhost ~]# ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  1.3   3136  2516 ?        S    07:58   0:00 /bin/sh /sbin/init
+root         2  0.0  0.0      0     0 ?        S    07:58   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        I    07:58   0:00 [kworker/0:0]
+root         4  0.0  0.0      0     0 ?        I<   07:58   0:00 [kworker/0:0H]
+root         5  0.0  0.0      0     0 ?        I    07:58   0:00 [kworker/u2:0]
+root         6  0.0  0.0      0     0 ?        I<   07:58   0:00 [mm_percpu_wq]
+root         7  0.0  0.0      0     0 ?        S    07:58   0:00 [ksoftirqd/0]
+root         8  0.0  0.0      0     0 ?        S    07:58   0:00 [kdevtmpfs]
+root         9  0.0  0.0      0     0 ?        I<   07:58   0:00 [netns]
+root        10  0.0  0.0      0     0 ?        S    07:58   0:00 [oom_reaper]
+root        11  0.0  0.0      0     0 ?        I<   07:58   0:00 [writeback]
+root        12  0.0  0.0      0     0 ?        I<   07:58   0:00 [crypto]
+root        13  0.0  0.0      0     0 ?        I<   07:58   0:00 [kblockd]
+root        14  0.0  0.0      0     0 ?        S    07:58   0:00 [kswapd0]
+root        15  0.0  0.0      0     0 ?        I    07:58   0:00 [kworker/0:1]
+root        32  0.0  0.0      0     0 ?        S    07:58   0:00 [khvcd]
+root        42  0.0  0.7   1944  1472 ?        Ss   07:59   0:00 dhcpcd
+root        47  0.0  1.5   6204  2944 hvc0     Ss   07:59   0:00 sh -l
+root        78  0.0  0.0      0     0 ?        I    07:59   0:00 [kworker/u2:1]
+root        81  4.2  1.4   8180  2740 hvc0     R+   08:11   0:00 ps aux
 
 
 # PARTE B — Processo filho
 # Cole a saída dos comandos e responda:
 
 sleep 5m &
-  PID do filho: 
+  PID do filho: 82
 
 cat /proc/[FILHO]/status | grep -E "Pid|PPid|State"
-  [cole aqui]
+  State:  S (sleeping)
+Pid:    82
+PPid:   47
+TracerPid:      0
 
 ps -o pid,ppid,stat,cmd (antes do kill)
-  [cole aqui]
+   PID  PPID STAT CMD
+   47     1 Ss   sh -l
+   82    47 S    sleep 5m
+   85    47 R+   ps -o pid,ppid,stat,cmd
 
 ps -o pid,ppid,stat,cmd (depois do kill)
-  [cole aqui]
+   PID  PPID STAT CMD
+   47     1 Ss   sh -l
+   86    47 R+   ps -o pid,ppid,stat,cmd
 
 
 # PARTE C — Questões de síntese
@@ -45,7 +74,11 @@ ps -o pid,ppid,stat,cmd (depois do kill)
 #    O que esse encadeamento sugere sobre como os processos sao
 #    criados no Linux?
 
-Resposta 1:
+Resposta 1:Nenhum processo surge do nada, tudo no Linux um outro processo, o surgimento vem através de uma corrente que um processo nasce do pai do pai do pai.... e assim vai infinitamente.
+
+
+
+
 
 
 # 2. O arquivo /proc/<PID>/status mostra o campo State com uma letra
@@ -53,4 +86,4 @@ Resposta 1:
 #    o que aconteceu com o processo filho? O que isso te faz pensar  
 #    sobre a vida de um processo?
 
-Resposta 2:
+Resposta 2: A morte de um processo acontece e o filho entra em um estado de zombie e a morte de um programa acontece duas fazes a morte física e a morte de remoção de tabela
